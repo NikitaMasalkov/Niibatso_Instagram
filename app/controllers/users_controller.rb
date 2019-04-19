@@ -14,14 +14,12 @@ class UsersController < ApplicationController
   end
 
   def create
-    binding.pry
     user = User.create(user_params)
     render json: user
 
   end
 
   def destroy
-    #binding.pry
     user = User.find_by(id: params[:id])
 
     if user
