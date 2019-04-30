@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :authorize_request, except: [:create]
+
   def index
     render json: User.all, each_serializer: UserSerializer
   end
@@ -15,8 +17,11 @@ class UsersController < ApplicationController
 
   def create
     user = User.create(user_params)
-    render json: user
-
+    if user.errors.empty?
+      render json: user
+    else
+      render json: { errors: user.errors }
+    end
   end
 
   def destroy
@@ -32,18 +37,18 @@ class UsersController < ApplicationController
 
   def update
     user = User.find_by(id: params[:id])
-    if user
-      user.update(user_params)
+
+    if user.update(user_params)
       render json: {success: "Updated"}
     else
       render json: {errors: "No user"}
     end
   end
 
-
+  private
 
   def user_params
-    params.require(:user).permit(:first_name, :description, :avatar)
+    params.require(:user).permit(:first_name, :description, :avatar, :password)
   end
 end
 
