@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, except: [:create]
+  before_action :authorize_request, except: [:create, :index]
 
   def index
     render json: User.all, each_serializer: UserSerializer
