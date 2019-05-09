@@ -15,6 +15,8 @@ class UsersController < ApplicationController
     end
   end
 
+  #hey
+
   def create
     user = User.create(user_params)
     if user.errors.empty?
