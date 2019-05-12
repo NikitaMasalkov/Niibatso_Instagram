@@ -11,6 +11,6 @@ class User < ApplicationRecord
   private
 
   def generate_token
-    self.token = JsonWebToken.encode(user_id: self.id)
+    self.token = ::JsonWebToken.encode(user_id: self.id)
   end
 end
